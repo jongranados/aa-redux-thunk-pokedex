@@ -68,6 +68,26 @@ export const createPokemon = (data) => async (dispatch) => {
   }
 }
 
+// thunk action creator for editing a Pokemon in the EditPokemonForm
+export const updatePokemon = (data) => async (dispatch) => { 
+  const url = `/api/pokemon/${data.id}`; 
+  const request = {
+    method: 'PUT', 
+    headers: { 
+      'Content-Type': 'application/json'
+    }, 
+    body: JSON.stringify(data)
+  }; 
+
+  const response = await fetch(url, request); 
+
+  if (response.ok) { 
+    const updatedPokemon = await response.json(); 
+    dispatch(addOnePokemon(updatedPokemon)); 
+    return updatedPokemon; 
+  }
+}; 
+
 const initialState = {
   list: [],
   types: []
