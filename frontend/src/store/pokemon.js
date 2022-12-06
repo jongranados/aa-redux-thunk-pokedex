@@ -28,6 +28,7 @@ export const getPokemon = () => async dispatch => {
   }
 };
 
+
 export const getPokemonTypes = () => async dispatch => {
   const response = await fetch(`/api/pokemon/types`);
 
@@ -36,6 +37,16 @@ export const getPokemonTypes = () => async dispatch => {
     dispatch(loadTypes(types));
   }
 };
+
+// thunk action creator for fetching a single Pokemon's details based on their id
+export const getPokemonDetails = (id) => async (dispatch) => { 
+  const response = await fetch(`/api/pokemon/${id}`); 
+
+  if (response.ok) { 
+    const pokemon = await response.json(); 
+    dispatch(addOnePokemon(pokemon)); 
+  }
+}
 
 const initialState = {
   list: [],
