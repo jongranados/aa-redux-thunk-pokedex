@@ -58,11 +58,12 @@ export const createPokemon = (data) => async (dispatch) => {
     }, 
     body: JSON.stringify(data)
   }; 
-  console.log(`request = ${request}`)
+
   const response = await fetch(url, request); 
-  console.log(`response: ${response}`); 
+  
   if (response.ok) { 
-    const createdPokemon = await response.json(); 
+    const createdPokemon = await response.json();
+    dispatch(addOnePokemon(createdPokemon)); 
     return createdPokemon; 
   }
 }
