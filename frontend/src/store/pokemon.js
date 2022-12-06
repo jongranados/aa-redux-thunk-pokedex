@@ -48,6 +48,25 @@ export const getPokemonDetails = (id) => async (dispatch) => {
   }
 }
 
+// thunk action creator for creating a Pokemon inside the CreatePokemonForm component
+export const createPokemon = (data) => async (dispatch) => { 
+  const url = '/api/pokemon';
+  const request = { 
+    method: 'POST', 
+    headers: { 
+      'Content-Type': 'application/json'
+    }, 
+    body: JSON.stringify(data)
+  }; 
+  console.log(`request = ${request}`)
+  const response = await fetch(url, request); 
+  console.log(`response: ${response}`); 
+  if (response.ok) { 
+    const createdPokemon = await response.json(); 
+    return createdPokemon; 
+  }
+}
+
 const initialState = {
   list: [],
   types: []
