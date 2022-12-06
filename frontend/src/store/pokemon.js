@@ -4,7 +4,7 @@ const LOAD = 'pokemon/LOAD';
 const LOAD_TYPES = 'pokemon/LOAD_TYPES';
 const ADD_ONE = 'pokemon/ADD_ONE';
 
-const load = list => ({
+const load = (list) => ({
   type: LOAD,
   list
 });

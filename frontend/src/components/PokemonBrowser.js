@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, Route, useParams } from 'react-router-dom';
-
+import { getPokemon } from '../store/pokemon';
 import PokemonDetail from './PokemonDetail';
 import CreatePokemonForm from './CreatePokemonForm';
 import Fab from './Fab';
@@ -13,6 +13,11 @@ const PokemonBrowser = () => {
   });
   const [showForm, setShowForm] = useState(false);
 
+  const dispatch = useDispatch(); 
+
+  useEffect(() => { 
+    dispatch(getPokemon()); 
+  }, [dispatch]);
 
   if (!pokemon) {
     return null;
