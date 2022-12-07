@@ -25,6 +25,42 @@ const remove = (itemId, pokemonId) => ({
   pokemonId
 });
 
+// thunk action creator for fetching items for a single Pokemon in the PokemonItems component
+export const getItems = (pokemonId) => async (dispatch) => {
+  const url = `/api/pokemon/${pokemonId}/items`;
+  const request = {
+    method: 'GET'
+  };
+
+  const response = await fetch(url, request);
+
+  if (response.ok) {
+    const items = await response.json();
+    dispatch(load(items, pokemonId));
+    return items;
+  }
+}; 
+
+// thunk action create for editing an item in the ItemForm component
+export const editItem = (payload) => async (dispatch) => { 
+  const url = `/api/items/${payload.id}`; 
+  const request = { 
+    method: 'PUT', 
+    headers: { 
+      'Content-Type': 'application/json', 
+    }, 
+    body: JSON.stringify(payload)
+  }; 
+  
+  const response = await fetch(url, request); 
+
+  if (response.ok) { 
+    let updatedItem = response.json(); 
+    dispatch(update(updatedItem)); 
+    return updatedItem; 
+  }
+}; 
+
 const initialState = {};
 
 const itemsReducer = (state = initialState, action) => {

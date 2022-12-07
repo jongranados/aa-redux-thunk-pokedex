@@ -86,7 +86,7 @@ export const updatePokemon = (data) => async (dispatch) => {
     dispatch(addOnePokemon(updatedPokemon)); 
     return updatedPokemon; 
   }
-}; 
+};
 
 const initialState = {
   list: [],
