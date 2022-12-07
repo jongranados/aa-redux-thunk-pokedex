@@ -25,7 +25,7 @@ const remove = (itemId, pokemonId) => ({
   pokemonId
 });
 
-// thunk action creator for fetching items for a single Pokemon in the PokemonItems component
+// thunk action creator for fetching items for a single Pokemon - dispatched in the PokemonItems component.
 export const getItems = (pokemonId) => async (dispatch) => {
   const url = `/api/pokemon/${pokemonId}/items`;
   const request = {
@@ -41,7 +41,7 @@ export const getItems = (pokemonId) => async (dispatch) => {
   }
 }; 
 
-// thunk action creator for editing an item in the ItemForm component
+// thunk action creator for editing an item - dispatched in the ItemForm component.
 export const editItem = (payload) => async (dispatch) => { 
   const url = `/api/items/${payload.id}`; 
   const request = { 
@@ -61,7 +61,29 @@ export const editItem = (payload) => async (dispatch) => {
   }
 }; 
 
-// thunk action creator for deleting an item in the ItemForm comopnent. 
+// thunk action creator for adding an item - dispatched in the itemForm component. 
+export const createItem = (payload) => async (dispatch) => { 
+  const url = `/api/pokemon/${payload.pokemonId}/items`;
+  const request = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload)
+  };
+  console.log(JSON.stringify(request.body))
+  console.log(payload.id)
+
+  const response = await fetch(url, request);
+
+  if (response.ok) {
+    let newItem = await response.json();
+    dispatch(add(newItem));
+    return newItem;
+  }
+}
+
+// thunk action creator for deleting an item - dispatched in the ItemForm comopnent. 
 export const removeItem = (itemId, pokemonId) => async (dispatch) => { 
   const url = `/api/items/${itemId}` 
   const request = { 
@@ -76,6 +98,8 @@ export const removeItem = (itemId, pokemonId) => async (dispatch) => {
   }
 
 }; 
+
+// thunk action creator for adding an item to database - dispatched in PokemonItem component. 
 
 const initialState = {};
 
