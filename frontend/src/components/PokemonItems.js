@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getItems } from "../store/items";
+import { getItems, removeItem } from "../store/items";
 
 const PokemonItems = ({ pokemon, setEditItemId }) => {
   const dispatch = useDispatch(); 
@@ -38,7 +38,9 @@ const PokemonItems = ({ pokemon, setEditItemId }) => {
       )}
       {pokemon.captured && (
         <td className="centered">
-          <button>
+          <button
+          onClick={() => dispatch(removeItem(item.id, pokemon.id))}
+          >
             Delete
           </button>
         </td>

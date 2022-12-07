@@ -41,7 +41,7 @@ export const getItems = (pokemonId) => async (dispatch) => {
   }
 }; 
 
-// thunk action create for editing an item in the ItemForm component
+// thunk action creator for editing an item in the ItemForm component
 export const editItem = (payload) => async (dispatch) => { 
   const url = `/api/items/${payload.id}`; 
   const request = { 
@@ -55,10 +55,26 @@ export const editItem = (payload) => async (dispatch) => {
   const response = await fetch(url, request); 
 
   if (response.ok) { 
-    let updatedItem = response.json(); 
+    let updatedItem = await response.json(); 
     dispatch(update(updatedItem)); 
     return updatedItem; 
   }
+}; 
+
+// thunk action creator for deleting an item in the ItemForm comopnent. 
+export const removeItem = (itemId, pokemonId) => async (dispatch) => { 
+  const url = `/api/items/${itemId}` 
+  const request = { 
+    method: 'DELETE'
+  }
+
+  const response = await fetch(url, request);
+
+  if (response.ok) {
+    const itemId = await response.json(); 
+    dispatch(remove(itemId.id, pokemonId)); 
+  }
+
 }; 
 
 const initialState = {};
